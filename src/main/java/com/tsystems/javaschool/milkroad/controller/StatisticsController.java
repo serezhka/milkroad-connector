@@ -43,6 +43,7 @@ public class StatisticsController implements Serializable {
             if (docStream != null) {
                 docStream.reset();
             }
+            FacesContext.getCurrentInstance().responseComplete();
         }
     }
 }
