@@ -1,28 +1,49 @@
 package com.tsystems.javaschool.milkroad.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Date;
 
 /**
  * Created by Sergey on 30.03.2016.
  */
-public class TopCustomerDTO {
-    private UserDTO info;
+public class TopCustomerDTO implements Serializable {
+    private String firstName;
+    private String lastName;
+    private Date birthday;
+    private String email;
     private BigDecimal cash;
 
-    public TopCustomerDTO() {
+    public String getFirstName() {
+        return firstName;
     }
 
-    public TopCustomerDTO(final UserDTO info, final BigDecimal cash) {
-        this.info = info;
-        this.cash = cash;
+    public void setFirstName(final String firstName) {
+        this.firstName = firstName;
     }
 
-    public UserDTO getInfo() {
-        return info;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setUser(final UserDTO info) {
-        this.info = info;
+    public void setLastName(final String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(final Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
     }
 
     public BigDecimal getCash() {

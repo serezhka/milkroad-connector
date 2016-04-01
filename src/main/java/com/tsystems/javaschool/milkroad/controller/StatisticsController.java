@@ -5,7 +5,11 @@ import com.tsystems.javaschool.milkroad.ejb.StatisticsEJB;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
 /**
@@ -17,14 +21,28 @@ public class StatisticsController implements Serializable {
     @EJB
     private StatisticsEJB statisticsEJB;
 
-    private Object object;
-
     @PostConstruct
     public void init() {
-        object = statisticsEJB.getStatistics();
     }
 
     public void generateStatisticsPDF() {
-        System.out.println("Debug");
+        ByteArrayOutputStream docStream = null;
+        final FacesContext context = FacesContext.getCurrentInstance();
+        final HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+        try {
+            docStream = statisticsEJB.generatePDFDocumentBytes();
+            response.setHeader("Cache-Control", "max-age=30");
+            response.setContentType("application/pdf");
+            response.setContentLength(docStream.size());
+            final ServletOutputStream servletOutputStream = response.getOutputStream();
+            docStream.writeTo(servletOutputStream);
+            servletOutputStream.flush();
+        } catch (final Exception e) {
+            // TODO Implement me
+        } finally {
+            if (docStream != null) {
+                docStream.reset();
+            }
+        }
     }
 }

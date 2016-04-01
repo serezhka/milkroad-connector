@@ -19,6 +19,7 @@
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <jboss.resteasy.version>3.0.12.Final</jboss.resteasy.version>
         <primefaces.version>5.3</primefaces.version>
+        <jackson.version>2.7.2</jackson.version>
     </properties>
 
     <dependencyManagement>
@@ -77,12 +78,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!--<dependency>
-            <groupId>itext</groupId>
-            <artifactId>itext</artifactId>
-            <version>${itext.version}</version>
-        </dependency>-->
-
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
@@ -117,6 +112,24 @@
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>${primefaces.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
     </dependencies>
