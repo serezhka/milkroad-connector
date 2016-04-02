@@ -15,6 +15,7 @@ import javax.ejb.Stateless;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import java.io.ByteArrayOutputStream;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class StatisticsEJB {
             doc.addProducer();
             doc.addCreator("Milkroad");
             doc.addTitle("Milkroad statistics report");
-            doc.setPageSize(PageSize.LETTER);
+            doc.setPageSize(PageSize.A3);
 
             doc.open();
 
@@ -90,14 +91,18 @@ public class StatisticsEJB {
             /* TOP CUSTOMERS */
             doc.add(new Paragraph("Top customers"));
             doc.add(new Paragraph("\n"));
-            final PdfPTable topCustomersTable = new PdfPTable(5);
+            final PdfPTable topCustomersTable = new PdfPTable(6);
             topCustomersTable.addCell(new PdfPCell(new Paragraph("Cash")));
+            topCustomersTable.addCell(new PdfPCell(new Paragraph("Total cash %")));
             topCustomersTable.addCell(new PdfPCell(new Paragraph("First name")));
             topCustomersTable.addCell(new PdfPCell(new Paragraph("Last name")));
             topCustomersTable.addCell(new PdfPCell(new Paragraph("Birth date")));
             topCustomersTable.addCell(new PdfPCell(new Paragraph("Email")));
             for (final TopCustomerDTO topCustomer : topCustomers) {
                 topCustomersTable.addCell(new PdfPCell(new Paragraph(topCustomer.getCash().toString())));
+                final BigDecimal percentage = topCustomer.getCash()
+                        .divide(income.getTotalCash(), 1).multiply(BigDecimal.valueOf(100));
+                topCustomersTable.addCell(new PdfPCell(new Paragraph(percentage.toString())));
                 topCustomersTable.addCell(new PdfPCell(new Paragraph(topCustomer.getFirstName())));
                 topCustomersTable.addCell(new PdfPCell(new Paragraph(topCustomer.getLastName())));
                 topCustomersTable.addCell(new PdfPCell(new Paragraph(topCustomer.getBirthday().toString())));
